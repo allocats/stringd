@@ -4,13 +4,9 @@
 #include <string.h>
 #include <time.h>
 
-extern size_t s_strnlen(const char* s, size_t max);
+#include "test.h"
 
-double now() {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
-    return ts.tv_sec + ts.tv_nsec / 1e9;
-}
+extern size_t s_strnlen(const char* s, size_t max);
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -45,9 +41,11 @@ int main(int argc, char* argv[]) {
     size_t s_len = s_strnlen(s2, TEST_SIZE);
     double s_end = now();
 
-    printf("GLIBC strnlen: %.5fms (%zu)\n", (double)(g_end - g_start) * 1000, g_len);
-    printf("My strnlen: %.5fms (%zu)\n", (double)(s_end - s_start) * 1000, s_len);
-    printf("Performance gain: %.3fx\n", ((double)(g_end - g_start) / (double)(s_end - s_start)));
+    printf("\ng_len: %zu\n", g_len);
+    printf("s_len: %zu\n\n", s_len);
+    print_result("glibc strnlen", g_start, g_end);
+    print_result("my strnlen", s_start, s_end);
+    printf("\nPerformance: %.3fx\n", ((double)(g_end - g_start) / (double)(s_end - s_start)));
 
     free(s);
     free(s2);

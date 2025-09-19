@@ -1,11 +1,11 @@
-NASM     = nasm
-NASMFLAGS= -g -f elf64
+NASM = nasm
+NASMFLAGS = -g -f elf64
 
-CC       = clang
-CFLAGS   = -O0 -fno-builtin -g3
+CC = clang
+CFLAGS = -O0 -fno-builtin -g3
 
 BUILDDIR = build
-BINDIR   = $(BUILDDIR)/bin
+BINDIR = $(BUILDDIR)/bin
 
 .PHONY: all
 all:
